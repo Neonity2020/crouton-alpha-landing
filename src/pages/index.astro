@@ -1,0 +1,279 @@
+---
+const nav = [
+  { label: '概览', href: '#overview' },
+  { label: '能力', href: '#capabilities' },
+  { label: '规格', href: '#specs' },
+  { label: '接入', href: '#integrate' },
+  { label: '问答', href: '#faq' },
+];
+
+const capabilities = [
+  {
+    title: '可扩展的编码',
+    desc: '轻量模型，为 scalable coding 而生，适合高频、重复的工程任务。',
+    icon: '◐',
+  },
+  {
+    title: 'Agent 子任务执行',
+    desc: '理想的「执行层」：配合前沿推理模型做规划，它负责把有界步骤真正落地。',
+    icon: '◎',
+  },
+  {
+    title: '多模态工作流',
+    desc: '文本、图像、视频、PDF / 文件输入 → 文本输出，统一处理文档与多媒体。',
+    icon: '⬡',
+  },
+  {
+    title: '工具调用',
+    desc: '原生 Tool Calling + 结构化输出，适合 Function Calling 与 Agent 场景。',
+    icon: '⬢',
+  },
+  {
+    title: '文档分析',
+    desc: '高频、重复的文档抽取、分类与批量处理，官方点名的高价值场景。',
+    icon: '↯',
+  },
+  {
+    title: '可调推理强度',
+    desc: '推理等级 minimal → max（6 档），按任务难度调节 reasoning 投入。',
+    icon: '⬣',
+  },
+];
+
+const specs = [
+  { k: '模型名称', v: 'Crouton Alpha Free（OpenCode 原生）' },
+  { k: '模型 ID', v: 'crouton-alpha-free（OpenCode）/ stealth/crouton-alpha（OpenRouter）' },
+  { k: '提供方', v: 'opencode（OpenCode）· 开发方匿名（stealth）' },
+  { k: '上线时间', v: '2026-11-03（OpenCode Console + Go 同日上线）' },
+  { k: '上下文窗口', v: '1,048,576 tokens（1M）' },
+  { k: '最大输出', v: '270,000 tokens（OpenCode）/ 943,718（OpenRouter）' },
+  { k: '输入模态', v: '文本 / 图像 / 视频 / PDF / 文件 / 音频（依平台略有差异）' },
+  { k: '输出', v: '文本' },
+  { k: '价格', v: '免费 · $0 输入 / $0 输出（限时免费期）' },
+  { k: 'API', v: 'OpenCode: openai-responses · https://opencode.ai/inference/openai/v1' },
+  { k: '数据策略', v: 'OpenCode 免费期收集数据保留 30 天，不用于模型训练' },
+  { k: '地区限制', v: 'OpenCode 不在欧盟、中国（含港澳）、俄罗斯、巴基斯坦等地区提供' },
+];
+
+const useCases = [
+  { title: 'Agent 子任务', desc: '抽取、打标签、短工具调用等重复步骤，交给轻量模型并行执行。', tag: 'Agent' },
+  { title: '代码生成', desc: '批量生成、重构与补全，适合高频调用的工程流水线。', tag: '开发' },
+  { title: '文档分析', desc: '批量解析 PDF / 文档 / 多媒体文件，提取结构化信息。', tag: '分析' },
+  { title: 'OpenCode 协作', desc: '在 OpenCode 中用 /models 直接选用，与高推理模型分工协作。', tag: '工具' },
+];
+
+const faqs = [
+  { q: 'Crouton Alpha 是什么？', a: '2026-11-03 同日上线在 OpenCode（crouton-alpha-free）与 OpenRouter（stealth/crouton-alpha）的 stealth 轻量模型，官方定位为「为可扩展编码、Agentic 与多模态工作流而生」。在 OpenCode 上线首周即进入 Token 用量 Top 8（约 1.4T tokens / 33 万+ 会话）。' },
+  { q: '需要在 OpenCode 里怎么用？', a: '直接在 OpenCode 中运行 /models，选用「Crouton Alpha Free」即可，无需经 OpenRouter 转发。OpenCode 免费模型无需账号；也可通过其 OpenAI 兼容端点（https://opencode.ai/inference/openai/v1）调用。' },
+  { q: '谁开发的？', a: '两边均标注为匿名 stealth，没有任何公司认领。OpenCode 数据页 Lab 标记 Unknown。社区有「指向 Meta Muse」的指纹推测，但 token 计数不匹配，身份未定 —— 本页不作断言。' },
+  { q: '真的免费吗？能用多久？', a: '两边预览期均为 $0 输入 / $0 输出。OpenCode 明确标注为限时免费（收集反馈期），历史 stealth 模型揭晓后免费价即结束，请按「随时可能变化」规划。' },
+  { q: '我的数据会被怎么处理？', a: 'OpenCode：免费期收集的数据保留 30 天，不用于模型训练；OpenRouter：提示与补全可能被提供方保留，不用于训练。两边都不建议发送敏感数据；另注意 OpenCode 地区限制（欧盟、中国、俄罗斯等不可用）。' },
+];
+---
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crouton Alpha — OpenCode 原生 Stealth 模型</title>
+  <meta name="description" content="Crouton Alpha Free：OpenCode 原生免费 stealth 模型。1M 上下文、$0 定价、工具调用与多模态输入，为 Agent 子任务与高频重复工作而生。" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#"><span class="logo">⬢</span> Crouton <em>Alpha</em></a>
+    <nav>{nav.map(n => <a href={n.href}>{n.label}</a>)}</nav>
+    <div class="nav-cta">
+      <a class="btn ghost" href="https://opencode.ai/" target="_blank" rel="noreferrer">OpenCode ↗</a>
+      <a class="btn solid" href="#integrate">立即接入 →</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="overview">
+      <div class="hero-bg" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div><div class="grid"></div></div>
+      <p class="eyebrow"><span class="dot"></span> OpenCode 原生 · 2026-11-03 上线 · 免费</p>
+      <h1>神秘模型<br /><span class="gradient">Crouton Alpha</span></h1>
+      <p class="lead">OpenCode 里可以直接选用的 <strong>Crouton Alpha Free</strong>：<br />为可扩展编码、Agentic 与多模态工作流而生的轻量模型。<br />它不负责规划 —— 它负责把重复的子任务真正做完。</p>
+      <div class="hero-actions">
+        <a class="btn solid big" href="#integrate">在 OpenCode 中启用 →</a>
+        <a class="btn outline big" href="#capabilities">了解能力</a>
+      </div>
+      <div class="hero-meta">
+        <span>💸 $0 / $0 限时免费</span><span class="sep"></span>
+        <span>🧩 1M 上下文</span><span class="sep"></span>
+        <span>📈 上线首周用量 Top 8</span><span class="sep"></span>
+        <span>🕵️ 开发方匿名</span>
+      </div>
+
+      <div class="chat-card">
+        <div class="chat-head"><span class="t r"></span><span class="t y"></span><span class="t g"></span><span class="chat-title">opencode · /models → Crouton Alpha Free</span></div>
+        <div class="chat-body">
+          <p class="msg user">帮我把这份季度报告总结成 3 个要点，并给出下一步行动建议。</p>
+          <p class="msg ai"><strong>Crouton Alpha Free</strong> 已分析 12 页文档：<br />1. 核心业务增长 18%，超预期 · 2. 转化率提升主要来自新渠道 · 3. 建议 Q3 加码内容投入，预计再提 6–8%。</p>
+          <div class="chat-input"><span>model = "crouton-alpha-free" …</span><button>发送 ↵</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div><strong>1,048,576</strong><span>上下文 Token</span></div>
+      <div><strong>$0</strong><span>输入 / 输出（限时免费）</span></div>
+      <div><strong>270K</strong><span>最大输出（OpenCode）</span></div>
+      <div><strong>Top 8</strong><span>OpenCode 首周 Token 用量</span></div>
+    </section>
+
+    <section id="capabilities" class="section">
+      <p class="kicker">CAPABILITIES</p>
+      <h2>为重复工作而生的执行层</h2>
+      <p class="sub">与前沿推理模型搭配，执行那些「把计划与信息变成行动」的有界步骤。</p>
+      <div class="cards">
+        {capabilities.map(c => (
+          <article class="card"><div class="icon">{c.icon}</div><h3>{c.title}</h3><p>{c.desc}</p></article>
+        ))}
+      </div>
+    </section>
+
+    <section id="specs" class="section split">
+      <div>
+        <p class="kicker">SPECS · 官方目录</p>
+        <h2>规格一目了然</h2>
+        <table>{specs.map(s => <tr><td>{s.k}</td><td>{s.v}</td></tr>)}</table>
+        <p class="note">⚠ 数据策略：OpenCode 免费期收集数据保留 30 天，不用于训练；敏感信息请勿发送。</p>
+      </div>
+      <div id="use-cases">
+        <p class="kicker">USE CASES</p>
+        <h2>为真实场景而造</h2>
+        <div class="cases">
+          {useCases.map(u => <article class="case"><span>{u.tag}</span><h3>{u.title}</h3><p>{u.desc}</p></article>)}
+        </div>
+      </div>
+    </section>
+
+    <section id="integrate" class="section">
+      <p class="kicker">INTEGRATE · OPENCODE 原生</p>
+      <h2>在 OpenCode 里直接选，无需转发</h2>
+      <p class="sub">OpenCode 已原生收录 <code>crouton-alpha-free</code>（2026-11-03 上线）。在 OpenCode 中运行 <code>/models</code> 选中「Crouton Alpha Free」即可开用；免费模型无需账号。</p>
+      <div class="code-grid">
+        <div class="code-box">
+          <div class="code-head">方式一 · OpenCode 内选用</div>
+          <pre>{`/models
+→ 选择：Crouton Alpha Free
+  （model id: crouton-alpha-free）
+  （provider: opencode）
+
+# 典型分工：
+# - 主模型（前沿推理）：规划、拆解任务
+# - Crouton Alpha Free：执行子任务、
+#   工具调用、批量处理`}</pre>
+          <p class="code-note">OpenCode 是开源编码 Agent（桌面 / 终端 / 手机 / SDK），支持 200+ 提供方、多会话并行、MCP 与自定义 Agent。</p>
+        </div>
+        <div class="code-box">
+          <div class="code-head">方式二 · OpenCode 端点直调（备选）</div>
+          <pre>{`# OpenAI 兼容端点（openai-responses）
+POST https://opencode.ai/inference/openai/v1/responses
+Authorization: Bearer $OPENCODE_API_KEY
+
+{
+  "model": "crouton-alpha-free",
+  "input": "总结这份文档"
+}
+# OpenRouter 同款为 stealth/crouton-alpha，
+# 仅作备选，无需优先经它转发。`}</pre>
+          <p class="code-note">注意：OpenCode 版最大输出 270K、OpenRouter 版 944K，规格以所用平台为准。</p>
+        </div>
+      </div>
+      <div class="integrate-links">
+        <a class="btn solid" href="https://opencode.ai/" target="_blank" rel="noreferrer">打开 OpenCode ↗</a>
+        <a class="btn outline" href="https://opencode.ai/data/unknown/crouton-alpha" target="_blank" rel="noreferrer">OpenCode 用量数据 ↗</a>
+        <a class="btn outline" href="https://openrouter.ai/stealth/crouton-alpha" target="_blank" rel="noreferrer">OpenRouter 备选页 ↗</a>
+      </div>
+    </section>
+
+    <section id="cta" class="cta">
+      <h2>准备好遇见<br /><span class="gradient">Crouton Alpha</span> 了吗？</h2>
+      <p>在 OpenCode 中 /models 选到 Crouton Alpha Free，零成本立刻开跑。</p>
+      <div class="hero-actions">
+        <a class="btn solid big" href="https://opencode.ai/" target="_blank" rel="noreferrer">前往 OpenCode →</a>
+        <a class="btn outline big" href="#integrate">查看接入方式</a>
+      </div>
+      <small>限时免费政策可能随时变更；免费期数据保留 30 天，不用于训练。</small>
+    </section>
+
+    <section id="faq" class="section faq">
+      <p class="kicker">FAQ</p>
+      <h2>常见问题</h2>
+      {faqs.map(f => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </section>
+  </main>
+
+  <footer>
+    <div><span class="logo">⬢</span> Crouton Alpha <span class="dim">— OpenCode 原生 · Stealth 预览 · 开发方匿名</span></div>
+    <div class="links"><a href="https://opencode.ai/" target="_blank" rel="noreferrer">OpenCode</a><a href="https://openrouter.ai/stealth/crouton-alpha" target="_blank" rel="noreferrer">OpenRouter</a><a href="#specs">规格</a><a href="#faq">问答</a></div>
+    <small>© 2026 Crouton Alpha 介绍页。规格以各平台官方目录为准；开发方身份未确认，社区推测不作为本页结论。</small>
+  </footer>
+
+  <style>:root{--bg:#f7f3ec;--card:#fffdf8;--border:#e3dccf;--text:#1c1a17;--muted:#6b6459;--accent:#b3402a;--accent2:#2f5233;--radius:10px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+    a{color:inherit;text-decoration:none}code{font-family:ui-monospace,monospace;background:#efe8da;padding:2px 6px;border-radius:4px;font-size:.9em}
+    h1,h2,h3{font-family:Georgia,"Songti SC","SimSun",serif;font-weight:700;letter-spacing:0}
+    .nav{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:32px;padding:14px 40px;background:#fffdf8;border-bottom:1px solid var(--border)}
+    .brand{font-weight:800;font-size:18px}.brand em{font-style:normal;color:var(--accent)}.logo{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:6px;background:#1c1a17;color:#f7f3ec;margin-right:8px}
+    .nav nav{display:flex;gap:22px;color:var(--muted);font-size:14px}.nav nav a:hover{color:var(--text)}.nav-cta{margin-left:auto;display:flex;gap:10px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid transparent;cursor:pointer}.btn.big{padding:13px 26px;font-size:15px;border-radius:8px}
+    .btn.solid{background:#1c1a17;color:#f7f3ec}.btn.solid:hover{background:#b3402a}
+    .btn.ghost,.btn.outline{border-color:#c9c0ab;color:var(--text);background:transparent}.btn.outline:hover{border-color:#1c1a17}
+    .hero{position:relative;text-align:center;padding:84px 24px 56px;border-bottom:1px solid var(--border)}
+    .hero-bg{display:none}
+    .eyebrow{position:relative;display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--border);border-radius:999px;background:#fffdf8;color:var(--muted);font-size:13px}
+    .dot{width:8px;height:8px;border-radius:50%;background:#4a7c59}
+    .hero h1{position:relative;font-size:clamp(42px,6.5vw,68px);line-height:1.1;margin:22px 0 16px}
+    .gradient{color:var(--accent)}
+    .lead{position:relative;color:var(--muted);font-size:17px;max-width:640px;margin:0 auto 28px}
+    .hero-actions{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .hero-meta{position:relative;display:flex;gap:14px;justify-content:center;align-items:center;color:var(--muted);font-size:13px;margin-top:20px;flex-wrap:wrap}
+    .sep{width:4px;height:4px;border-radius:50%;background:#c9c0ab}
+    .chat-card{position:relative;max-width:720px;margin:40px auto 0;text-align:left;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    .chat-head{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--border);background:#f3eee3}
+    .t{width:11px;height:11px;border-radius:50%;border:1px solid #b8ad97}.r{background:#e8ded0}.y{background:#d9cfb8}.g{background:#a8bfa3}
+    .chat-title{margin-left:8px;color:var(--muted);font-size:12px;font-family:ui-monospace,monospace}
+    .chat-body{padding:20px}.msg{padding:12px 14px;border-radius:8px;margin:0 0 12px;font-size:14px}
+    .msg.user{background:#f0e9dd;margin-left:48px}.msg.ai{background:#eef0e6;border:1px solid #d8dfc9;margin-right:48px}
+    .chat-input{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;background:#fffdf8}
+    .chat-input button{background:#1c1a17;color:#f7f3ec;border:0;padding:7px 14px;border-radius:6px;cursor:pointer}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1000px;margin:32px auto;padding:0 24px}
+    .stats div{text-align:center;padding:22px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card)}
+    .stats strong{display:block;font-size:26px;font-family:Georgia,serif}.stats span{color:var(--muted);font-size:13px}
+    .section{max-width:1100px;margin:0 auto;padding:64px 24px}
+    .kicker{color:var(--accent);font-size:12px;letter-spacing:.18em;font-weight:700;margin:0 0 10px}
+    .section h2,.cta h2{font-size:clamp(28px,4vw,38px);margin:0 0 10px}
+    .sub{color:var(--muted);margin:0 0 32px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{padding:24px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card)}
+    .icon{width:40px;height:40px;display:grid;place-items:center;border-radius:8px;background:#efe8da;color:#7a5c3e;font-size:18px;margin-bottom:12px}
+    .card h3{margin:0 0 6px}.card p{margin:0;color:var(--muted);font-size:14px}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+    table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--card)}
+    td{padding:11px 16px;border-bottom:1px solid var(--border);font-size:13.5px}tr:last-child td{border-bottom:0}td:first-child{color:var(--muted);width:32%}
+    .note{color:#9a6b1f;font-size:13px;margin-top:12px}
+    .cases{display:grid;gap:12px}.case{padding:18px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card)}
+    .case span{font-size:11px;color:var(--accent2);border:1px solid #b9c4a8;background:#f0f2e7;padding:2px 8px;border-radius:999px}
+    .case h3{margin:8px 0 4px}.case p{margin:0;color:var(--muted);font-size:14px}
+    .code-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .code-box{border:1px solid var(--border);border-radius:var(--radius);background:#1c1a17;overflow:hidden}
+    .code-head{padding:10px 16px;border-bottom:1px solid #38332b;color:#d9c9a8;font-size:12px;font-weight:700;letter-spacing:.08em}
+    .code-box pre{margin:0;padding:18px;overflow-x:auto;font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.6;color:#e8e2d4;background:transparent}
+    .code-note{margin:0;padding:14px 18px;border-top:1px solid #38332b;color:#a99f8a;font-size:13px}
+    .integrate-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+    .cta{text-align:center;padding:72px 24px;background:#1c1a17;color:#f7f3ec}
+    .cta .gradient{color:#e8a58f}
+    .cta p{color:#b8ad97}.cta small{color:#8a8172;display:block;margin-top:18px}
+    .cta .btn.outline{border-color:#4a4438;color:#f7f3ec}
+    .faq details{border:1px solid var(--border);border-radius:8px;background:var(--card);margin-bottom:10px;padding:16px 20px}
+    .faq summary{cursor:pointer;font-weight:600}.faq p{color:var(--muted);font-size:14px;margin:10px 0 0}
+    footer{border-top:1px solid var(--border);padding:32px 40px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;color:var(--muted);font-size:13px}
+    footer .links{display:flex;gap:18px}footer small{width:100%}
+    @media(max-width:860px){.cards{grid-template-columns:1fr 1fr}.split,.code-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.nav nav{display:none}}
+    @media(max-width:520px){.cards{grid-template-columns:1fr}.nav{padding:12px 16px}}</style>
+</body>
+</html>
