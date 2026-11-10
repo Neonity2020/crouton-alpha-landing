@@ -1,6 +1,7 @@
 # Crouton Alpha Landing — 设计文档
 
 > 页面实现：`src/pages/index.astro`（Astro 单页，内联 CSS，无外部 UI 库）
+> 通用模板：`DESIGN.template.md`（本文档是该模板在本项目的实例化版本）
 > 设计基调：**纸面编辑风（Editorial Paper）** —— 刻意避开「深色 + 紫蓝渐变 + 发光球 + 毛玻璃」的 AI 风模板感，做得像一份认真的产品简报。
 
 ## 1. 设计理念
